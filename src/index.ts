@@ -53,7 +53,7 @@ export function createAgent(
     databaseAdapter: db,
     token,
     modelProvider: character.modelProvider,
-    evaluators: [],
+    evaluators: character.plugins?.flatMap(p => p.evaluators || []) || [],
     character,
     plugins: [
       bootstrapPlugin,

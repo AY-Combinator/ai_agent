@@ -1,8 +1,8 @@
 import { Evaluator, Memory } from "@elizaos/core";
 
 export const answerEvaluator: Evaluator = {
-    name: "evaluateAnswer",
-    description: "Evaluate if the user's answer is complete and satisfactory",
+    name: "answerEvaluator",
+    description: "Evaluates user answers for module progress",
     examples: [
         {
             context: "Evaluating problem statement clarity",
@@ -18,13 +18,22 @@ export const answerEvaluator: Evaluator = {
         }
     ],
     similes: ["check answer quality", "verify response completeness"],
-    handler: async (context, message: Memory) => {
-        const answer = message.content.text;
-        // Implement your evaluation logic here
-        return {
-            score: 0.8,
-            feedback: "Good answer, but consider adding more specific examples"
-        };
+    validate: async (context, message) => {
+        // Check if we're in a module progress context
+        const settings = context.character.settings as any;
+        console.log(!!(settings?.moduleProgress &&
+            settings?.problemFramingModule &&
+            message?.content?.text))
+        return !!(settings?.moduleProgress && 
+                settings?.problemFramingModule && 
+                message?.content?.text);
     },
-    validate: async () => true
+    handler: async (context, message: Memory) => {
+        console.log('Answer Evaluator triggered:', {
+            messageContent: message.content
+        });
+        const action = context.actions.find(a => a.name === "trackModuleProgress");
+        await action.handler(context, message);
+        return { score: 0.8 };
+    }
 }; 
