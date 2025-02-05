@@ -35,6 +35,7 @@ export const trackModuleProgress: Action = {
             isComplete: isLastQuestion,
             callbackUrl: isLastQuestion ? "http://localhost:3003" : undefined
         };
+        console.log('params', params);
 
         (context.character.settings as unknown as ExtendedSettings).moduleProgress = {
             ...(context.character.settings as unknown as ExtendedSettings).moduleProgress,
@@ -63,6 +64,19 @@ export const trackModuleProgress: Action = {
             }
         }
 
+        console.log(getNextSection(params.section), params);
+        // If all sections are complete, generate the template with answers
+        if (params.isComplete && !getNextSection(params.section)) {
+            console.log('Generating template');
+            const template = generateProblemFramingTemplate(context.character.settings);
+            return { 
+                success: true,
+                sectionComplete: params.isComplete,
+                nextSection: null,
+                template
+            };
+        }
+
         return { 
             success: true,
             sectionComplete: params.isComplete,
@@ -72,8 +86,72 @@ export const trackModuleProgress: Action = {
 };
 
 function getNextSection(currentSection: string): string | null {
-    const sections = ['problemStatement', 'contextBackground', 'stakeholders', 'rootCause', 
-                     'problemScope', 'assumptions', 'userInsights', 'framingStatement', 'validation'];
+    // const sections = ['problemStatement', 'contextBackground', 'stakeholders', 'rootCause',
+    //                  'problemScope', 'assumptions', 'userInsights', 'framingStatement', 'validation'];
+    const sections = ['problemStatement'];
     const currentIndex = sections.indexOf(currentSection);
     return currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
+}
+
+function generateProblemFramingTemplate(settings: any): string {
+    const answers = collectAnswersFromSections(settings);
+    return `
+Key Questions for Problem Framing
+
+1. Defining the Problem
+- Core Problem: ${answers.problemStatement[0]}
+- Affected Parties: ${answers.problemStatement[1]}
+- Impact: ${answers.problemStatement[2]}
+
+2. Understanding the Context
+- Market/Industry State: ${answers.contextBackground[0]}
+- Existing Solutions: ${answers.contextBackground[1]}
+- Influencing Trends: ${answers.contextBackground[2]}
+
+3. Stakeholders & Impact
+- Key Stakeholders: ${answers.stakeholders[0]}
+- Pain Points: ${answers.stakeholders[1]}
+- Different Perspectives: ${answers.stakeholders[2]}
+
+4. Root Cause Analysis
+- Underlying Causes: ${answers.rootCause[0]}
+- Supporting Evidence: ${answers.rootCause[1]}
+- Systemic Issues: ${answers.rootCause[2]}
+
+5. Problem Scope & Boundaries
+- Addressed Aspects: ${answers.problemScope[0]}
+- Out of Scope: ${answers.problemScope[1]}
+- Success Definition: ${answers.problemScope[2]}
+
+6. Assumptions & Constraints
+- Key Assumptions: ${answers.assumptions[0]}
+- Constraints: ${answers.assumptions[1]}
+- Impact of Limitations: ${answers.assumptions[2]}
+
+7. User & Customer Insights
+- User Feedback: ${answers.userInsights[0]}
+- Research Support: ${answers.userInsights[1]}
+- Behavioral Patterns: ${answers.userInsights[2]}
+
+8. Problem Statement Clarity
+- Clear Statement: ${answers.framingStatement[0]}
+- Stakeholder Needs: ${answers.framingStatement[1]}
+- Solution Space: ${answers.framingStatement[2]}
+
+9. Validation & Evidence
+- Problem Significance: ${answers.validation[0]}
+- Urgency Metrics: ${answers.validation[1]}
+- Non-action Risks: ${answers.validation[2]}
+`;
+}
+
+function collectAnswersFromSections(settings: any): Record<string, string[]> {
+    const moduleProgress = settings.moduleProgress;
+    const answers: Record<string, string[]> = {};
+    
+    Object.keys(settings.problemFramingModule).forEach(section => {
+        answers[section] = moduleProgress[section]?.answers || [];
+    });
+    
+    return answers;
 } 
