@@ -2,6 +2,7 @@ import { Plugin } from "@elizaos/core";
 import { trackModuleProgress } from "../actions/moduleProgress.ts";
 import { answerEvaluator } from "../evaluators/answerEvaluator.ts";
 import { scoreAnswer } from "../actions/scoreAnswer.ts";
+import { evaluateInvestment } from "../actions/evaluateInvestment.ts";
 
 export const moduleProvider: Plugin = {
     name: "moduleProvider",
@@ -14,7 +15,7 @@ export const moduleProvider: Plugin = {
 export const scoreProvider: Plugin = {
     name: "scoreProvider",
     description: "Provides scoring functionality for problem framing evaluation",
-    actions: [scoreAnswer],
+    actions: [scoreAnswer, evaluateInvestment],
     evaluators: [],
     clients: []
 }; 
