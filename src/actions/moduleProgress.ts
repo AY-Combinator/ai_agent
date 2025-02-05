@@ -86,9 +86,8 @@ export const trackModuleProgress: Action = {
 };
 
 function getNextSection(currentSection: string): string | null {
-    // const sections = ['problemStatement', 'contextBackground', 'stakeholders', 'rootCause',
-    //                  'problemScope', 'assumptions', 'userInsights', 'framingStatement', 'validation'];
-    const sections = ['problemStatement'];
+    const sections = ['problemStatement', 'contextBackground', 'stakeholders', 'rootCause',
+                     'problemScope', 'assumptions', 'userInsights', 'framingStatement', 'validation'];
     const currentIndex = sections.indexOf(currentSection);
     return currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
 }
