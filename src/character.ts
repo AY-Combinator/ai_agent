@@ -2,7 +2,7 @@ import { Character, Clients, defaultCharacter, ModelProviderName } from "@elizao
 import { moduleProvider } from "./providers/index.ts";
 
 // Define the question structure
-const problemFramingQuestions = {
+export const problemFramingQuestions = {
     problemStatement: {
         title: "1. Problem Statement",
         questions: [

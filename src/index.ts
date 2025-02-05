@@ -25,6 +25,7 @@ import {
 import { initializeDatabase } from "./database/index.ts";
 import {judgeCharacter} from "./characters/judgeCharacter.ts";
 import {investorCharacter} from "./characters/investorCharacter.ts";
+import {mentorCharacter} from "./characters/mentorCharacter.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -134,7 +135,7 @@ const startAgents = async () => {
   const args = parseArguments();
 
   let charactersArg = args.characters || args.character;
-  let characters = [character, judgeCharacter, investorCharacter];
+  let characters = [character, mentorCharacter, judgeCharacter, investorCharacter];
 
   console.log("charactersArg", charactersArg);
   if (charactersArg) {
