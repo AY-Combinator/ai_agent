@@ -49,6 +49,7 @@ import {uxAnalystCharacter} from "./characters/uxAnalyst.ts";
 import {riskReevaluationAnalystCharacter} from "./characters/riskReevaluationAnalyst.ts";
 import {softwareArchitectCharacter} from "./characters/softwareArchitect.ts";
 import {mvpDevelopmentAnalystCharacter} from "./characters/mvpDevelopmentAnalyst.ts";
+import {jobsToBeAnalystCharacter} from "./characters/jobsToBeAnalyst.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -159,7 +160,7 @@ const startAgents = async () => {
 
   let charactersArg = args.characters || args.character;
   let characters = [character, mentorCharacter, judgeCharacter, investorCharacter, riskAnalystCharacter,
-    competitorAnalystCharacter, marketResearchAnalystCharacter, userInterviewerCharacter, userJourneyAnalystCharacter, userPersonaAnalystCharacter, businessModelAnalystCharacter, investmentReadinessAnalystCharacter, exitStrategyAnalystCharacter, scalingStrategiesAnalystCharacter, pitchPreparationAnalystCharacter, teamStrategyAnalystCharacter, measuringImpactAnalystCharacter, salesStrategyAnalystCharacter, contentStrategyAnalystCharacter, communityBuildingAnalystCharacter, gtmStrategyAnalystCharacter, brandPositioningAnalystCharacter, roadmapAnalystCharacter, uxAnalystCharacter, riskReevaluationAnalystCharacter, softwareArchitectCharacter, mvpDevelopmentAnalystCharacter, businessModelAnalystCharacter, competitorAnalystCharacter, marketResearchAnalystCharacter, userJourneyAnalystCharacter, userInterviewerCharacter ];
+    competitorAnalystCharacter, marketResearchAnalystCharacter, userInterviewerCharacter, userJourneyAnalystCharacter, userPersonaAnalystCharacter, businessModelAnalystCharacter, investmentReadinessAnalystCharacter, exitStrategyAnalystCharacter, scalingStrategiesAnalystCharacter, pitchPreparationAnalystCharacter, teamStrategyAnalystCharacter, measuringImpactAnalystCharacter, salesStrategyAnalystCharacter, contentStrategyAnalystCharacter, communityBuildingAnalystCharacter, gtmStrategyAnalystCharacter, brandPositioningAnalystCharacter, roadmapAnalystCharacter, uxAnalystCharacter, riskReevaluationAnalystCharacter, softwareArchitectCharacter, mvpDevelopmentAnalystCharacter, businessModelAnalystCharacter, competitorAnalystCharacter, marketResearchAnalystCharacter, userJourneyAnalystCharacter, userInterviewerCharacter, jobsToBeAnalystCharacter ];
 
   console.log("charactersArg", charactersArg);
   if (charactersArg) {
