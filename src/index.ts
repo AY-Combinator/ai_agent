@@ -26,6 +26,29 @@ import { initializeDatabase } from "./database/index.ts";
 import {judgeCharacter} from "./characters/judgeCharacter.ts";
 import {investorCharacter} from "./characters/investorCharacter.ts";
 import {mentorCharacter} from "./characters/mentorCharacter.ts";
+import {riskAnalystCharacter} from "./characters/riskAnalyst.ts";
+import {competitorAnalystCharacter} from "./characters/competitorAnalyst.ts";
+import {marketResearchAnalystCharacter} from "./characters/marketResearchAnalyst.ts";
+import {userInterviewerCharacter} from "./characters/userInterviewer.ts";
+import {userJourneyAnalystCharacter} from "./characters/userJourneyAnalyst.ts";
+import {userPersonaAnalystCharacter} from "./characters/userPersonaAnalyst.ts";
+import {businessModelAnalystCharacter} from "./characters/businessModelAnalyst.ts";
+import {investmentReadinessAnalystCharacter} from "./characters/investmentReadinessAnalyst.ts";
+import {exitStrategyAnalystCharacter} from "./characters/exitStrategyAnalyst.ts";
+import {scalingStrategiesAnalystCharacter} from "./characters/scalingStrategiesAnalyst.ts";
+import {pitchPreparationAnalystCharacter} from "./characters/pitchPreparationAnalyst.ts";
+import {teamStrategyAnalystCharacter} from "./characters/teamStrategyAnalyst.ts";
+import {measuringImpactAnalystCharacter} from "./characters/measuringImpactAnalyst.ts";
+import {salesStrategyAnalystCharacter} from "./characters/salesStrategyAnalyst.ts";
+import {contentStrategyAnalystCharacter} from "./characters/contentStrategyAnalyst.ts";
+import {communityBuildingAnalystCharacter} from "./characters/communityBuildingAnalyst.ts";
+import {gtmStrategyAnalystCharacter} from "./characters/gtmStrategyAnalyst.ts";
+import {brandPositioningAnalystCharacter} from "./characters/brandPositioningAnalyst.ts";
+import {roadmapAnalystCharacter} from "./characters/roadmapAnalyst.ts";
+import {uxAnalystCharacter} from "./characters/uxAnalyst.ts";
+import {riskReevaluationAnalystCharacter} from "./characters/riskReevaluationAnalyst.ts";
+import {softwareArchitectCharacter} from "./characters/softwareArchitect.ts";
+import {mvpDevelopmentAnalystCharacter} from "./characters/mvpDevelopmentAnalyst.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -135,7 +158,8 @@ const startAgents = async () => {
   const args = parseArguments();
 
   let charactersArg = args.characters || args.character;
-  let characters = [character, mentorCharacter, judgeCharacter, investorCharacter];
+  let characters = [character, mentorCharacter, judgeCharacter, investorCharacter, riskAnalystCharacter,
+    competitorAnalystCharacter, marketResearchAnalystCharacter, userInterviewerCharacter, userJourneyAnalystCharacter, userPersonaAnalystCharacter, businessModelAnalystCharacter, investmentReadinessAnalystCharacter, exitStrategyAnalystCharacter, scalingStrategiesAnalystCharacter, pitchPreparationAnalystCharacter, teamStrategyAnalystCharacter, measuringImpactAnalystCharacter, salesStrategyAnalystCharacter, contentStrategyAnalystCharacter, communityBuildingAnalystCharacter, gtmStrategyAnalystCharacter, brandPositioningAnalystCharacter, roadmapAnalystCharacter, uxAnalystCharacter, riskReevaluationAnalystCharacter, softwareArchitectCharacter, mvpDevelopmentAnalystCharacter, businessModelAnalystCharacter, competitorAnalystCharacter, marketResearchAnalystCharacter, userJourneyAnalystCharacter, userInterviewerCharacter ];
 
   console.log("charactersArg", charactersArg);
   if (charactersArg) {
