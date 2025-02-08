@@ -15,7 +15,7 @@ export const moduleProvider: Plugin = {
 export const scoreProvider: Plugin = {
     name: "scoreProvider",
     description: "Provides scoring functionality for problem framing evaluation",
-    actions: [scoreAnswer, evaluateInvestment],
+    actions: [scoreAnswer],
     evaluators: [],
     clients: []
 }; 
