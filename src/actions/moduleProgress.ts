@@ -1,12 +1,19 @@
 import { Action, Memory } from "@elizaos/core";
+import { SecretVaultWrapper } from 'nillion-sv-wrappers';
+import { v4 as uuidv4 } from 'uuid';
+import { orgConfig } from '../nillion/nillionOrgConfig.js';
 
 interface ExtendedSettings {
     moduleProgress: {
         currentSection: string;
         currentQuestionIndex: number;
         completedSections: string[];
+        [key: string]: any; // For dynamic section answers
     };
+    [key: string]: any; // This allows for any module type (problemFramingModule, teamStrategyModule, etc.)
 }
+
+const SCHEMA_ID = 'ac706abf-e7f1-47bc-bef5-cf21f9d9ce31'; // Use the ID from your schema creation
 
 export const trackModuleProgress: Action = {
     name: "trackModuleProgress",
@@ -23,7 +30,7 @@ export const trackModuleProgress: Action = {
     ]],
     validate: async () => true,
     handler: async (context, message: Memory) => {
-        const settings = context.character.settings as any;
+        const settings = context.character.settings as unknown as ExtendedSettings;
         const currentSection = settings.moduleProgress.currentSection;
         const currentQuestionIndex = settings.moduleProgress.currentQuestionIndex;
         const questions = settings.problemFramingModule[currentSection].questions;
@@ -37,13 +44,13 @@ export const trackModuleProgress: Action = {
         };
         console.log('params', params);
 
-        (context.character.settings as unknown as ExtendedSettings).moduleProgress = {
-            ...(context.character.settings as unknown as ExtendedSettings).moduleProgress,
+        settings.moduleProgress = {
+            ...settings.moduleProgress,
             currentSection: params.section,
             currentQuestionIndex: params.questionIndex,
             completedSections: params.isComplete 
-                ? [...(context.character.settings as unknown as ExtendedSettings).moduleProgress.completedSections, params.section]
-                : (context.character.settings as unknown as ExtendedSettings).moduleProgress.completedSections
+                ? [...settings.moduleProgress.completedSections, params.section]
+                : settings.moduleProgress.completedSections
         };
 
         if (params.isComplete && params.callbackUrl) {
@@ -65,10 +72,38 @@ export const trackModuleProgress: Action = {
         }
 
         console.log(getNextSection(params.section), params);
-        // If all sections are complete, generate the template with answers
+        // If all sections are complete, generate the template and store in Nillion
         if (params.isComplete && !getNextSection(params.section)) {
-            console.log('Generating template');
+            console.log('Generating template and storing in Nillion');
             const template = generateProblemFramingTemplate(context.character.settings);
+            
+            try {
+                const collection = new SecretVaultWrapper(
+                    orgConfig.nodes,
+                    orgConfig.orgCredentials,
+                    SCHEMA_ID
+                );
+                await collection.init();
+
+                const moduleData = [{
+                    _id: uuidv4(),
+                    module_type: { $allot: context.character.name.replace(' Expert', '').toLowerCase() },
+                    completed_at: { $allot: new Date().toISOString() },
+                    sections: settings.moduleProgress.completedSections.map(section => ({
+                        section_name: { $allot: section },
+                        answers: settings.moduleProgress[section]?.answers.map(answer => ({
+                            $allot: answer
+                        })) || []
+                    }))
+                }];
+
+                const dataWritten = await collection.writeToNodes(moduleData);
+                console.log('✅ Module data stored in Nillion:', JSON.stringify(dataWritten, null, 2));
+
+            } catch (error) {
+                console.error('❌ Failed to store in Nillion:', error.message);
+            }
+
             return { 
                 success: true,
                 sectionComplete: params.isComplete,

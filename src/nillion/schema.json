@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Module Responses",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "format": "uuid",
+        "coerce": true
+      },
+      "module_type": {
+        "type": "object",
+        "properties": {
+          "$share": {
+            "type": "string",
+            "enum": [
+              "problemFraming",
+              "communityBuilding",
+              "investmentReadiness",
+              "riskHypothesis",
+              "brandPositioning",
+              "teamStrategy",
+              "exitStrategy",
+              "contentStrategy",
+              "businessModel",
+              "softwareArchitecture",
+              "scalingStrategies",
+              "riskReevaluation"
+            ]
+          }
+        },
+        "required": ["$share"]
+      },
+      "completed_at": {
+        "type": "object",
+        "properties": {
+          "$share": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["$share"]
+      },
+      "sections": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "section_name": {
+              "type": "object",
+              "properties": {
+                "$share": {
+                  "type": "string"
+                }
+              },
+              "required": ["$share"]
+            },
+            "answers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "$share": {
+                    "type": "string"
+                  }
+                },
+                "required": ["$share"]
+              }
+            }
+          },
+          "required": ["section_name", "answers"]
+        },
+        "minItems": 1
+      }
+    },
+    "required": ["_id", "module_type", "completed_at", "sections"]
+  }
+}
