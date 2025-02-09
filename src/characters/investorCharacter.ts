@@ -1,6 +1,7 @@
 import { Character, defaultCharacter, ModelProviderName } from "@elizaos/core";
 import { scoreProvider } from "../providers/index.ts";
 import { customEvmPlugin } from "../plugins/customEvmPlugin.ts";
+import { agentKitPlugin } from "@elizaos/plugin-agentkit";
 
 type InvestorSettings = typeof defaultCharacter.settings & {
     investmentCriteria: {
@@ -25,11 +26,14 @@ type InvestorSettings = typeof defaultCharacter.settings & {
 export const investorCharacter: Character = {
     ...defaultCharacter,
     name: "Venture Partner",
-    plugins: [scoreProvider, customEvmPlugin],
+    plugins: [scoreProvider, customEvmPlugin, agentKitPlugin],
     clients: [],
     modelProvider: ModelProviderName.ANTHROPIC,
     settings: {
-        secrets: {},
+        secrets: {
+            CDP_API_KEY_NAME: process.env.CDP_API_KEY_NAME,
+            CDP_API_KEY_PRIVATE_KEY: process.env.CDP_API_KEY_PRIVATE_KEY
+        },
         voice: {
             model: "en_US-hfc_male-medium",
         },
