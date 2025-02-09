@@ -1,94 +1,78 @@
-# Eliza
+# AY Combinator AI Agents with Secure Data Storage
 
-## Edit the character files
+A collection of specialized AI experts powered by Anthropic's Claude, helping startups develop comprehensive strategies with secure data storage via Nillion.
 
-Open `src/character.ts` to modify the default character. Uncomment and edit.
+## AI Expert Agents
 
-### Custom characters
+Each agent guides you through structured modules, storing responses securely:
 
-To load custom characters instead:
-- Use `pnpm start --characters="path/to/your/character.json"`
-- Multiple character files can be loaded simultaneously
+### Strategy Development
+- **Problem Framing Expert**: Core problem definition and analysis
+- **Market Research Expert**: Market validation and industry analysis
+- **Brand Positioning Expert**: Brand strategy and market differentiation
+- **Sales Strategy Expert**: B2B/B2C sales methodologies
 
-### Add clients
-```
-# in character.ts
-clients: [Clients.TWITTER, Clients.DISCORD],
+### Risk & Investment
+- **Investment Readiness Expert**: Fundraising preparation and investor relations
+- **Risk Analyst**: Risk analysis and hypothesis testing
+- **Risk Reevaluation Expert**: Risk assessment and mitigation strategies
+- **Exit Strategy Expert**: Exit planning and M&A preparation
 
-# in character.json
-clients: ["twitter", "discord"]
-```
+### Growth & Community
+- **Scaling Strategies Expert**: Growth and expansion planning
+- **Community Building Expert**: Community engagement and development
 
-## Duplicate the .env.example template
+Each expert:
+- Follows structured question modules
+- Provides real-time feedback
+- Stores encrypted responses using Nillion
+- Generates actionable summaries
 
-```bash
-cp .env.example .env
-```
+## Secure Data Storage
 
-\* Fill out the .env file with your own values.
+All module responses are encrypted and distributed across Nillion's secure network:
+- Responses encrypted using $share mechanism
+- Data distributed across multiple nodes
+- Maintains confidentiality of strategic information
 
-### Add login credentials and keys to .env
-```
-DISCORD_APPLICATION_ID="discord-application-id"
-DISCORD_API_TOKEN="discord-api-token"
-...
-OPENROUTER_API_KEY="sk-xx-xx-xxx"
-...
-TWITTER_USERNAME="username"
-TWITTER_PASSWORD="password"
-TWITTER_EMAIL="your@email.com"
-```
+## Investment Capabilities
 
-## Install dependencies and start your agent
+The Investor agent is powered by Coinbase Agent Kit for secure on-chain interactions:
+- Executes investments through smart contracts on Base Sepolia testnet
+- Processes USDC investments with automated approvals
+- Validates investment criteria and scoring thresholds
+- Performs thorough due diligence through structured evaluation
 
-```bash
-pnpm i && pnpm start
-```
-Note: this requires node to be at least version 22 when you install packages and run the agent.
+Investment workflow:
+1. Reviews project scores and problem framing analysis
+2. Evaluates opportunities against defined investment criteria
+3. Makes decisions within portfolio constraints
+4. Executes investments through Base Sepolia contracts
+5. Stores investment records securely via Nillion
 
-## Run with Docker
+## Getting Started
 
-### Build and run Docker Compose (For x86_64 architecture)
-
-#### Edit the docker-compose.yaml file with your environment variables
-
-```yaml
-services:
-    eliza:
-        environment:
-            - OPENROUTER_API_KEY=blahdeeblahblahblah
-```
-
-#### Run the image
+To run the project locally:
 
 ```bash
-docker compose up
+pnpm start
 ```
 
-### Build the image with Mac M-Series or aarch64
+This will:
+- Start all AI expert agents
+- Initialize secure data storage
+- Connect to Base Sepolia testnet
+- Enable CLI interaction with agents
 
-Make sure docker is running.
-
-```bash
-# The --load flag ensures the built image is available locally
-docker buildx build --platform linux/amd64 -t eliza-starter:v1 --load .
+The investor agent configuration and smart contract interactions can be found in:
+```typescript:src/characters/investorCharacter.ts
+startLine: 26
+endLine: 63
 ```
 
-#### Edit the docker-compose-image.yaml file with your environment variables
-
-```yaml
-services:
-    eliza:
-        environment:
-            - OPENROUTER_API_KEY=blahdeeblahblahblah
+And the investment action implementation is in:
+```typescript:src/actions/investAction.ts
+startLine: 41
+endLine: 95
 ```
 
-#### Run the image
-
-```bash
-docker compose -f docker-compose-image.yaml up
-```
-
-# Deploy with Railway
-
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/aW47_j)
